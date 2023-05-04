@@ -1,0 +1,4 @@
+edu\fpdual\web\fpdualweb\controller\NotificationController.class
+edu\fpdual\web\fpdualweb\api\dto\Notification.class
+edu\fpdual\web\fpdualweb\api\dto\Notification$NotificationBuilder.class
+org\MyResource.class
