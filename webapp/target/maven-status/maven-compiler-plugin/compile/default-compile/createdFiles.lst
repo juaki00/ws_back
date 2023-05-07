@@ -1,4 +1,12 @@
-edu\fpdual\web\fpdualweb\controller\NotificationController.class
-edu\fpdual\web\fpdualweb\api\dto\Notification.class
+edu\fpdual\web\fpdualweb\manager\impl\UserManagerImpl.class
+edu\fpdual\web\fpdualweb\api\dto\Usuario$UsuarioBuilder.class
 edu\fpdual\web\fpdualweb\api\dto\Notification$NotificationBuilder.class
+main.class
+edu\fpdual\web\fpdualweb\api\dto\Usuario.class
+edu\fpdual\web\fpdualweb\controller\UserController.class
+edu\fpdual\web\fpdualweb\controller\NotificationController.class
 org\MyResource.class
+edu\fpdual\web\fpdualweb\connector\MySQLConstants.class
+edu\fpdual\web\fpdualweb\connector\MySQLConnector.class
+edu\fpdual\web\fpdualweb\api\dto\Notification.class
+edu\fpdual\web\fpdualweb\manager\UserManager.class
