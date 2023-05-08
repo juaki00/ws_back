@@ -70,7 +70,7 @@ public class NotificationController {
         return Response.status(201).entity(notification).build();
     }
 
-    @GET
+    @POST
     @Path("/getAll/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers() throws SQLException, ClassNotFoundException {
@@ -78,12 +78,9 @@ public class NotificationController {
         userManager = new UserManagerImpl();
         Set<Usuario> usuarios = userManager.findAllUsuario(connection);
 
-        for(Usuario user : usuarios){
-            user.setNombre(user.getNombre().toUpperCase());
-        }
 
         System.out.println(usuarios);
-        return Response.ok().entity(usuarios).build();
+        return Response.status(201).entity(usuarios).build();
     }
 }
 
