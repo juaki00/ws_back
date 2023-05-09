@@ -48,9 +48,9 @@ public class UserController {
     @Path("/insert/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void insertUser(Usuario usuario) throws SQLException, ClassNotFoundException {
+    public boolean insertUser(Usuario usuario) throws SQLException, ClassNotFoundException {
         con = new MySQLConnector().getMySQLConnection();
-        userManager.insertUser(con,usuario.getNick(), usuario.getNombre(), usuario.getPassword(), usuario.getApellido(), usuario.getTelefono(), usuario.getEmail());
+        return userManager.insertUser(con,usuario.getNick(), usuario.getNombre(), usuario.getPassword(), usuario.getApellido(), usuario.getTelefono(), usuario.getEmail());
     }
 
     @POST
