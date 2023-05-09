@@ -57,8 +57,27 @@ public class UserController {
     @Path("/getPass/")
     public Response getPass(String nick) throws SQLException, ClassNotFoundException {
         con = new MySQLConnector().getMySQLConnection();
-        Usuario userCompleted = userManager.userFromNick(con,nick);
-        return Response.status(201).entity(userCompleted.getPassword()).build();
+        if (userManager.existeNick(con, nick)) {
+            Usuario userCompleted = userManager.userFromNick(con, nick);
+            return Response.status(201).entity(userCompleted.getPassword()).build();
+        }
+        else{
+            return null;
+        }
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @POST
+    @Path("/userFromNick/")
+    public Response userFromNick(String nick) throws SQLException, ClassNotFoundException {
+        con = new MySQLConnector().getMySQLConnection();
+        if (userManager.existeNick(con, nick)) {
+            Usuario userCompleted = userManager.userFromNick(con, nick);
+            return Response.status(201).entity(userCompleted).build();
+        }
+        else {
+            return null;
+        }
     }
 
     @GET
