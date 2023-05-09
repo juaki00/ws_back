@@ -52,7 +52,7 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public void insertUser(Connection con, String nick, String nombre, String passwd, String apellido, String telefono, String email) throws SQLException, ClassNotFoundException {
+    public boolean insertUser(Connection con, String nick, String nombre, String passwd, String apellido, String telefono, String email) throws SQLException, ClassNotFoundException {
         try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO usuarios VALUES (?,?,?,?,?,?)")) {
 
             prepstm.setString(1, nick);
@@ -66,6 +66,10 @@ public class UserManagerImpl implements UserManager {
 
 
         }
+        catch (SQLException e){
+            return false;
+        }
+        return true;
     }
 
     @Override

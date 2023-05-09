@@ -32,10 +32,10 @@ public class UserController {
 
     /**
      *
-     * @return Devuelve todos los usuarios de la tabla
+     * @return Devuelve todos los usuarios registrados
      */
-    @POST
-    @Path("/getAll/")
+    @GET
+    @Path("/getAll")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers() throws SQLException, ClassNotFoundException {
         con = new MySQLConnector().getMySQLConnection();
@@ -47,47 +47,47 @@ public class UserController {
     @POST
     @Path("/insert/")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public void insertUser(Usuario usuario) throws SQLException, ClassNotFoundException {
         con = new MySQLConnector().getMySQLConnection();
         userManager.insertUser(con,usuario.getNick(), usuario.getNombre(), usuario.getPassword(), usuario.getApellido(), usuario.getTelefono(), usuario.getEmail());
     }
 
-
     @POST
     @Path("/getPass/")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response userFromNick(Usuario user) throws SQLException, ClassNotFoundException {
+    public Response getPass(String nick) throws SQLException, ClassNotFoundException {
         con = new MySQLConnector().getMySQLConnection();
-        Usuario userCompleted = userManager.userFromNick(con,user.getNick());
-        return Response.ok().entity(userCompleted).build();
+        if (userManager.existeNick(con, nick)) {
+            Usuario userCompleted = userManager.userFromNick(con, nick);
+            return Response.status(201).entity(userCompleted.getPassword()).build();
+        }
+        else{
+            return null;
+        }
     }
 
-
+    @Produces(MediaType.APPLICATION_JSON)
+    @POST
+    @Path("/userFromNick/")
+    public Response userFromNick(String nick) throws SQLException, ClassNotFoundException {
+        con = new MySQLConnector().getMySQLConnection();
+        if (userManager.existeNick(con, nick)) {
+            Usuario userCompleted = userManager.userFromNick(con, nick);
+            return Response.status(201).entity(userCompleted).build();
+        }
+        else {
+            return null;
+        }
+    }
 
     @GET
-    @Path("/get/{id}/name")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response existeNick(Usuario user) throws SQLException, ClassNotFoundException {
+    @Path("/existe/{nick}")
+    public Response existeNick(@PathParam("nick") String nick) throws SQLException, ClassNotFoundException {
         con = new MySQLConnector().getMySQLConnection();
-        if (!userManager.existeNick(con, user.getNick())){
-            return Response.status(400).entity(false).build();
+        if (!userManager.existeNick(con, nick)){
+            return Response.ok().entity(false).build();
         } else {
             return Response.ok().entity(true).build();
         }
     }
-
-//
-//    /**
-//     *
-//     * @param nick
-//     * @return Devuelve true si existe un usuario con ese nick y false si no existe
-//     */
-//    public boolean existeNick(String nick) throws SQLException, ClassNotFoundException {
-//        Connection con = new MySQLConnector().getMySQLConnection();
-//        return userManager.existeNick(con, nick);
-//    }
-
-
 }
